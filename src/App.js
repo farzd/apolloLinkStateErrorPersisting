@@ -15,10 +15,10 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          {data.pet && <h1> {data.pet}</h1>}
+          <h1>{data.pet.toString()}</h1>
           <button onClick={()=> {
-            this.props.mutate({ variables: { text: 'dog' } });
-          }}>Show</button>
+            this.props.mutate({ variables: { text: !!data.pet } });
+          }}>Toggle</button>
           <br/>
           <br/>
           <Childz />

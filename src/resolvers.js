@@ -1,11 +1,11 @@
 export const defaults = {
-    pet: 'cat'
+    pet: true
 }
 
 export const resolvers = {
     Query: {       
         user: (_, args, { cache }) => {
-            return Promise.reject(new Error('ERROR'))
+            //return Promise.reject(new Error('ERROR'))
             return {
                 __typename: 'name',
                 name: 'farzad'
@@ -16,7 +16,7 @@ export const resolvers = {
         mutatePet: (_, { text}, { cache }) => {
             const data = {
                 __typename: 'pet',
-                pet: text
+                pet: !text
             };
             cache.writeData({data})
             return null
