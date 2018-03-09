@@ -1,32 +1,47 @@
 import React, { Component } from 'react';
-import { graphql } from 'react-apollo'
+import { compose, graphql } from 'react-apollo'
 import gql from 'graphql-tag';
-import logo from './logo.svg';
 import './App.css';
+import Childz from './Childz'
 
 class App extends Component {
   render() {
-    console.log(this.props);
+    const { data } = this.props;
+    
+    if(!data.loading) {
+      console.log(this.props);
+    }
+    
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          {data.pet && <h1> {data.pet}</h1>}
+          <button onClick={()=> {
+            this.props.mutate({ variables: { text: 'dog' } });
+          }}>Show</button>
+          <br/>
+          <br/>
+          <Childz />
         </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
       </div>
 
     );
   }
 }
 
-const getUser = gql`
-  query {
-    getUser @client{
-      name
+const mutatePet = gql`
+  mutation mutatePet($text: String!) {
+    mutatePet(text: $text) @client {
+      pet
     }
-  }`;
+}`;
 
-export default graphql(getUser)(App);
+const getPet = gql`
+  query getPet{
+    pet @client
+  }`;
+  
+export default compose(
+  graphql(mutatePet),
+  graphql(getPet)
+)(App);

@@ -1,22 +1,24 @@
 export const defaults = {
-    getUser: {
-        name: 'farzad'
-    }
+    pet: 'cat'
 }
 
 export const resolvers = {
-    Query: {
-        getUser: (_, args, { cache }) => {
-            console.log('called');
-            const data = {
-                getUser: {
-                    __typename: 'getUser',
-                    name: 'farzad'
-                }
+    Query: {       
+        user: (_, args, { cache }) => {
+            return Promise.reject(new Error('ERROR'))
+            return {
+                __typename: 'name',
+                name: 'farzad'
             }
-            cache.writeData({
-                data
-            })
+        }
+    },
+    Mutation: {
+        mutatePet: (_, { text}, { cache }) => {
+            const data = {
+                __typename: 'pet',
+                pet: text
+            };
+            cache.writeData({data})
             return null
         }
     }
