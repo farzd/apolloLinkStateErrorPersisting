@@ -1,47 +1,34 @@
 import React, { Component } from 'react';
-import { compose, graphql } from 'react-apollo'
+import { graphql } from 'react-apollo'
 import gql from 'graphql-tag';
 import './App.css';
 import Childz from './Childz'
 
+
 class App extends Component {
   render() {
     const { data } = this.props;
-    
-    if(!data.loading) {
-      console.log(this.props);
-    }
-    
-    return (
+    return(
       <div className="App">
         <header className="App-header">
-          <h1>{data.pet.toString()}</h1>
-          <button onClick={()=> {
-            this.props.mutate({ variables: { text: !!data.pet } });
-          }}>Toggle</button>
+        {data.error && data.error.message}
+        {data.user && data.user.name}
           <br/>
           <br/>
-          <Childz />
-        </header>
-      </div>
-
-    );
-  }
+          <Childz />          
+        </header>  
+        </div>    
+    )
+  }  
 }
 
-const mutatePet = gql`
-  mutation mutatePet($text: String!) {
-    mutatePet(text: $text) @client {
-      pet
-    }
-}`;
 
-const getPet = gql`
-  query getPet{
-    pet @client
+const getUser = gql`
+  query getUser{
+    user @client{
+      name
+    }
   }`;
-  
-export default compose(
-  graphql(mutatePet),
-  graphql(getPet)
-)(App);
+
+
+export default graphql(getUser)(App);
