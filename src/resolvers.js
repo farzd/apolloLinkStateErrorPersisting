@@ -5,7 +5,7 @@ export const defaults = {
 export const resolvers = {
     Query: {       
         user: (_, args, { cache }) => {
-            //return Promise.reject(new Error('Some Error Msg'))
+            return Promise.reject(new Error('Some Error Msg'))
             return {
                 __typename: 'name',
                 name: 'farzad'
