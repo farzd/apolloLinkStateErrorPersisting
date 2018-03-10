@@ -1,11 +1,11 @@
 export const defaults = {
-    pet: true
+    checkedin: false
 }
 
 export const resolvers = {
     Query: {       
         user: (_, args, { cache }) => {
-            //return Promise.reject(new Error('ERROR'))
+            //return Promise.reject(new Error('Some Error Msg'))
             return {
                 __typename: 'name',
                 name: 'farzad'
@@ -13,10 +13,10 @@ export const resolvers = {
         }
     },
     Mutation: {
-        mutatePet: (_, { text}, { cache }) => {
+        mutateCheckIn: (_, { val }, { cache }) => {
             const data = {
-                __typename: 'pet',
-                pet: !text
+                __typename: 'checkedin',
+                checkedin: !val
             };
             cache.writeData({data})
             return null
