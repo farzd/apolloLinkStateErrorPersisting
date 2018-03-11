@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { compose, graphql } from 'react-apollo'
+import { graphql } from 'react-apollo'
 import gql from 'graphql-tag';
 import CheckIn from './components/CheckIn'
 import Feed from './components/Feed'

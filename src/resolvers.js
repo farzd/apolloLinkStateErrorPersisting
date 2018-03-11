@@ -4,11 +4,17 @@ export const defaults = {
 
 export const resolvers = {
     Query: {       
-        user: (_, args, { cache }) => {
-            return Promise.reject(new Error('Some Error Msg'))
-            return {
-                __typename: 'name',
-                name: 'farzad'
+        user: async (_, args, { cache }) => {
+            try {
+                return await api()
+            } catch(e) {
+                return {
+                    __typename: 'name',
+                    name: {
+                        response: null,
+                        error: 'some error'
+                    }
+                }   
             }
         }
     },
@@ -23,3 +29,14 @@ export const resolvers = {
         }
     }
 };
+
+const api = async() => {
+    return Promise.reject(new Error('Some Error Msg'))
+    return {
+        __typename: 'name',
+        name: {
+            response: 'farzad',
+            error: null
+        }
+    }     
+}
